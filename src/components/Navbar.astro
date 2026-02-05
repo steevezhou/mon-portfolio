@@ -1,0 +1,37 @@
+---
+const navItems = [
+  { name: 'Accueil', href: '#home' },
+  { name: 'À propos', href: '#about' },
+  { name: 'BTS SIO', href: '#bts' },
+  { name: 'Compétences', href: '#skills' },
+  { name: 'Projets', href: '#projects' },
+  { name: 'Veille', href: '#veille' },
+  { name: 'Certifications', href: '#certs' },
+  { name: 'Contact', href: '#contact' },
+];
+---
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="#home" class="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+        Portfolio
+      </a>
+      
+      <div class="hidden md:flex space-x-6">
+        {navItems.map(item => (
+          <a 
+            href={item.href} 
+            class="text-xs lg:text-sm font-medium text-slate-300 hover:text-blue-400 transition-colors"
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
+
+      <div class="md:hidden text-slate-300 text-sm italic">
+        BTS SIO SLAM
+      </div>
+    </div>
+  </div>
+</nav>

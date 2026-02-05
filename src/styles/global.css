@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-white;
+    margin: 0;
+    font-family: sans-serif;
+  }
+}
+
+section {
+  /* Garde une marge pour que le titre ne soit pas collé sous la barre de menu */
+  scroll-margin-top: 5rem;
+}

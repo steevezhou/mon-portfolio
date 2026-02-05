@@ -1,0 +1,65 @@
+---
+import Navbar from '../components/Navbar.astro';
+import '../styles/global.css';
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title}</title>
+    </head>
+    <body class="bg-slate-950 text-white selection:bg-blue-500/30">
+        <Navbar />
+        <slot />
+
+        <script>
+            // On utilise une fonction anonyme pour éviter les conflits de variables
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (this: HTMLAnchorElement, e: Event) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (!targetId) return;
+                    
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 80;
+                        const startPosition = window.scrollY;
+                        const distance = targetPosition - startPosition;
+                        let startTime: number | null = null;
+
+                        // Durée en millisecondes (5000 = très lent)
+                        const duration = 500; 
+
+                        function animation(currentTime: number) {
+                            if (startTime === null) startTime = currentTime;
+                            const timeElapsed = currentTime - startTime;
+                            const run = ease(timeElapsed, startPosition, distance, duration);
+                            window.scrollTo(0, run);
+                            if (timeElapsed < duration) requestAnimationFrame(animation);
+                        }
+
+                        function ease(t: number, b: number, c: number, d: number) {
+                            t /= d / 2;
+                            if (t < 1) return c / 2 * t * t + b;
+                            t--;
+                            return -c / 2 * (t * (t - 2) - 1) + b;
+                        }
+
+                        requestAnimationFrame(animation);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
